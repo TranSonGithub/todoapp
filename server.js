@@ -9,7 +9,7 @@ const MONGO_URI = process.env.MONGO_URI
 
 // set middleware
 app.set('views', './views')
-app.set('view', 'ejs')
+app.set('view engine', 'ejs')
 app.set('layout', 'layouts/layout')
 app.use(expressLayouts)
 app.use(express.static('public'))
@@ -23,7 +23,10 @@ db.on('error', (e) => console.log(e))
 
 // Router app
 const index = require('./router/index')
+const todo = require('./router/todo')
+
 app.use('/', index)
+app.use('/todos', todo)
 
 
 app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`))

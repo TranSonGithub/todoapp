@@ -14,6 +14,9 @@ app.set('layout', 'layouts/layout')
 app.use(expressLayouts)
 app.use(express.static('public'))
 
+// transform data to json
+app.use(express.json())
+app.use(express.urlencoded({extended: true}) )
 
 // connect mongodb
 mongoose.connect(`${MONGO_URI}/todos`, {useNewUrlParser: true, useUnifiedTopology: true})

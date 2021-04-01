@@ -1,12 +1,32 @@
 const express = require('express')
 const router = express.Router()
 
-const todoDb = require('../models/todo')
+const ToDo = require('../models/todo')
 
-let todoList = [{id: 1, content: 'text'}]
 
-router.get('/', (req, res) => {
-  res.render('todo', {todoList: todoList})
+router.get('/',async (req, res) => {
+  try {
+    let todoList = await ToDo.find({})
+    res.render('todo', {todoList: todoList})
+  } catch {
+    res.redirect('/todos')
+  }
+    
+  
+  
+})
+router.post('/', async (req, res) => {
+  let todo = new ToDo({
+    content: req.body.content
+  })
+  try {
+    let newTodo = await todo.save()
+    res.redirect('/todos')
+  } catch(e) {
+    res.render('todo', {todoList: todo, error: e})
+  }
+  
+
 })
 
 module.exports = router

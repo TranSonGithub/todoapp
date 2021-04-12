@@ -11,8 +11,6 @@ router.get('/',async (req, res) => {
   } catch {
     res.redirect('/')
   }
-    
-  
   
 })
 router.post('/', async (req, res) => {

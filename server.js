@@ -6,7 +6,7 @@ const methodOverride = require('method-override')
 
 require('dotenv').config()
 const PORT = process.env.PORT || 3000
-const MONGO_URI = 'mongodb://localhost:27017'
+const MONGO_URI = process.env.MONGO_URI
 
 // set middleware
 app.set('views', './views')
@@ -21,7 +21,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}) )
 
 // connect mongodb
-mongoose.connect(`${MONGO_URI}/todos`, {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(`${MONGO_URI}`, {useNewUrlParser: true, useUnifiedTopology: true})
 const db = mongoose.connection
 db.once('open', () => console.log('Connect database success'))
 db.on('error', (e) => console.log(e))

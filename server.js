@@ -5,8 +5,8 @@ const mongoose = require('mongoose')
 const methodOverride = require('method-override')
 
 require('dotenv').config()
-const PORT = process.env.PORT || 3000
-const MONGO_URI = 'mongodb://localhost:27017'
+const PORT = process.env.PORT || 2000
+const MONGO_URI = process.env.MONGO_URI
 
 // set middleware
 app.set('views', './views')
@@ -26,10 +26,13 @@ const db = mongoose.connection
 db.once('open', () => console.log('Connect database success'))
 db.on('error', (e) => console.log(e))
 
-// Router app
-const todo = require('./router/todo')
+// Controller app
+const todoControl = require('./controllers/todo')
 
-app.use('/', todo)
-
+app.get('/', todoControl.index)
+app.post('/', todoControl.add)
+app.get('/:id', todoControl.edit)
+app.put('/:id', todoControl.update)
+app.delete('/:id', todoControl.delete)
 
 app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`))
